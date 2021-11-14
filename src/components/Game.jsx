@@ -4,36 +4,37 @@ import Board from "./Board";
 import Moves from "./Moves";
 import StartUp from "./StartUp";
 import { useObserver } from "mobx-react";
-import "./index.css";
+import * as Styles from "./../styles/game";
 
 const Game = () => {
   const gameStore = useGameStore();
-  // useEffect(()=>{
-  //   gameStore.history.push({
-  //       squares: Array(gameStore.boardLength * gameStore.boardLength).fill(null),
-  //     });
-  // },[]);
-
   return useObserver(() => (
     <>
       {!gameStore.boardLength && <StartUp />}
       {gameStore.boardLength && (
-        <div className="game">
+        <Styles.Game columns={gameStore.boardLength}>
+            <Styles.StartNew show={gameStore.isFinished}>
           {gameStore.isFinished && (
-            <button className="btn start-new" onClick={gameStore.startNewGame}>
+            <>
+             {gameStore.status.toLowerCase().includes('win') && <Styles.Header>{gameStore.status}</Styles.Header> }
+            <Styles.Btn start="true" onClick={gameStore.startNewGame}>
               Start A new Game
-            </button>
+            </Styles.Btn>
+            </>
           )}
-          <div className="game-board">
-            <Board />
-          </div>
-          <div className="game-info">
-            <div className="header">{gameStore.status}</div>
-            <ol>
-              <Moves />
-            </ol>
-          </div>
-        </div>
+          </Styles.StartNew>
+          <Board />
+          <Styles.GameInfo>
+            <Styles.Header>{gameStore.status.toLowerCase().includes('win') ? "Finished" :gameStore.status}</Styles.Header>
+            <table>
+              <tbody>
+                <tr key="table-header-row"><Styles.TableHeader>player 1(X)</Styles.TableHeader>
+                <Styles.TableHeader>player 2(O)</Styles.TableHeader></tr>
+                <Moves />
+              </tbody>
+            </table>
+          </Styles.GameInfo>        
+        </Styles.Game>
       )}
     </>
   ));

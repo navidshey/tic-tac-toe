@@ -1,7 +1,8 @@
 import React from "react";
 import { useGameStore } from "./../contexts/GameContext";
 import { useObserver } from "mobx-react";
-import "./index.css";
+import * as Styles from "./../styles/game";
+import "./../styles/board.css";
 
 const Board = () => {
   const gameStore = useGameStore();
@@ -15,15 +16,16 @@ const Board = () => {
         children.push(renderSquare(gameStore.boardLength * i + j));
       }
       board.push(
-        <div key={`row-${i}`} className="board-row">
+        <Styles.BoardRow key={`row-${i}`} >
           {children}
-        </div>
+        </Styles.BoardRow>
       );
     }
 
     return board;
   };
 
+  //TODO: There is a bug when using emotion. last clicked index not geting highlight
   const renderSquare = (cellIndex) => {
     return (
       <button

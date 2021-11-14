@@ -25,6 +25,7 @@ export function createGameStore() {
       if (this.hasWinner) {
         return "Winner: " + this.hasWinner.winner;
       } else if (this.stepNumber === this.boardLength * this.boardLength) {
+        this.isFinished = true;
         return "No one win.";
       } else {
         return "Next player: " + (this.xIsNext ? "X" : "O");

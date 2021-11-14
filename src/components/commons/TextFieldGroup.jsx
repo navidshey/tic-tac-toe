@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import * as Styles from './../../styles/game'
 
 const TextFieldGroup = ({
   id,
@@ -19,7 +20,7 @@ const TextFieldGroup = ({
       {!isLoading && (
         <>
           <label htmlFor={name}>{info}</label>
-          <input
+          <Styles.InputText
             id={id}
             type={type}
             className={className || ""}
@@ -45,6 +46,8 @@ const TextFieldGroup = ({
 
 TextFieldGroup.propTypes = {
   id: PropTypes.string,
+  isLoading: PropTypes.bool,
+  className: PropTypes.string,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   label: PropTypes.string,
