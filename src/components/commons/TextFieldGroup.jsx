@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import * as Styles from './../../styles/game'
+import * as Styles from "./../../styles/game";
 
 const TextFieldGroup = ({
   id,

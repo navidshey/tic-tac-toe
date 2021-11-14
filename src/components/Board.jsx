@@ -1,12 +1,11 @@
 import React from "react";
 import { useGameStore } from "./../contexts/GameContext";
-import { useObserver } from "mobx-react";
 import * as Styles from "./../styles/game";
 import "./../styles/board.css";
+import { observer } from "mobx-react-lite";
 
-const Board = () => {
+const Board = observer(() => {
   const gameStore = useGameStore();
-
   const createBoard = () => {
     let board = [];
 
@@ -16,9 +15,7 @@ const Board = () => {
         children.push(renderSquare(gameStore.boardLength * i + j));
       }
       board.push(
-        <Styles.BoardRow key={`row-${i}`} >
-          {children}
-        </Styles.BoardRow>
+        <Styles.BoardRow key={`row-${i}`}>{children}</Styles.BoardRow>
       );
     }
 
@@ -47,7 +44,8 @@ const Board = () => {
     );
   };
 
-  return useObserver(() => <div>{createBoard()}</div>);
-};
+  return <div>{createBoard()}</div>;
+  // return useObserver(() => <div>{createBoard()}</div>);
+});
 
 export default Board;
