@@ -1,3 +1,8 @@
+/**check if the value is empty
+ * 
+ * @param value - value to check its value 
+ * @returns true if value is empty and false if not.
+ */
 export const isEmpty = (value) => {
   return (
     value === undefined ||

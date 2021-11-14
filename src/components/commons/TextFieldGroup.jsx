@@ -2,6 +2,21 @@ import React from "react";
 import PropTypes from "prop-types";
 import * as Styles from "./../../styles/game";
 
+/**A custom component Input element and be used as Input or submit and other type of inputs
+ * 
+ * @param id - Id of input
+ * @param name - name of input
+ * @param placeholder - placeholder of input
+ * @param value - value to show in the input 
+ * @param error - error message when input is invalid
+ * @param type - type of input like 'text', 'submit', default value is Text
+ * @param onChange - onChange callback when input has change
+ * @param className -  custom className to be added to input
+ * @param isLoading - a boolean value to show loading while is true
+ * @param disabled - a boolean value which disable input on true
+ * @param info - info message for the input
+ * @returns Input Element
+ */
 const TextFieldGroup = ({
   id,
   name,

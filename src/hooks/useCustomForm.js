@@ -1,5 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 
+/**A custom hook for generating forms, by receiving initial data, it prepare the form
+ * 
+ * @param initialValues - based on the elements inside the form, it receives initial value for each of them
+ * @param errors - based on the elements inside the form, it receives initial value for each of them and can set error whenever the value of element is invalid
+ * @param validation - a callback function to validate all elements inside the form
+ * @param onSubmit - a callback function to call when form submitted
+ * 
+ * @returns an object containing values, errors, touched, handleChange, handleBlur, handleSubmit, handleFormClear, setValues  of the form
+ */
 export const useCustomForm = ({
   initialValues,
   errorValues,
