@@ -9,19 +9,19 @@ const Moves = observer(() => {
   return (
     gameStore.clickedIndex.length > 0 &&
     gameStore.history.map((step, move) => {
-      const desc = move ? "Go to move #" + move : undefined;
+      const desc = !isNaN(move) ? "Move #" + (+move+1) : undefined;
       const index = gameStore.clickedIndex[move] + 1;
-      const row = Math.ceil(index / gameStore.boardLength);
-      const column = index - (row - 1) * gameStore.boardLength;
+      const row = Math.ceil(index / gameStore.boardColumn);
+      const column = index - (row - 1) * gameStore.boardColumn;
 
       return (
         <>
-          {desc && (
+          {desc && !isNaN(row) && (
             <tr key={`${move}-${step}`}>
               <Styles.TableCell>
                 {move % 2 == 1 && (
                   <>
-                    <Styles.Btn onClick={() => gameStore.jumpTo(move)}>
+                    <Styles.Btn onClick={() => gameStore.jumpTo(move+1)}>
                       {desc}
                       <div>
                         {!isNaN(index) && `row: ${row}, columns: ${column}`}
@@ -33,7 +33,7 @@ const Moves = observer(() => {
               <Styles.TableCell>
                 {move % 2 == 0 && (
                   <>
-                    <Styles.Btn onClick={() => gameStore.jumpTo(move)}>
+                    <Styles.Btn onClick={() => gameStore.jumpTo(move+1)}>
                       {desc}
                       <div>
                         {!isNaN(index) && `row: ${row}, columns: ${column}`}

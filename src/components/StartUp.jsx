@@ -6,34 +6,43 @@ import { isEmpty } from "./../utils/validation";
 import * as Styles from "./../styles/game";
 
 const initialValue = {
-  boardLength: "4",
-  winnerLength: "4",
+  boardRow: "6",
+  boardColumn: "4",
+  winnerLength: "3",
 };
 
 const StartUp = () => {
   const gameStore = useGameStore();
   const onSubmit = (values) => {
-    gameStore.setStartUpData(+values.boardLength, +values.winnerLength);
+    gameStore.setStartUpData(+values.boardRow, +values.boardColumn, +values.winnerLength);
   };
 
   const validation = (data) => {
     let errors = {};
 
-    if (isEmpty(data)) {
-      errors.boardLength = "Please enter the rows and columns number!";
-    } else if (+data.boardLength < 3) {
-      errors.boardLength = "Rows and columns number should be bigger than 3.";
-    } else if (+data.boardLength > 10) {
-      errors.boardLength = "Rows and commons number should be less than 10.";
+    if (isEmpty(data) || isEmpty(data.boardRow)) {
+      errors.boardRow = "Please enter the rows number!";
+    } else if (+data.boardRow < 3) {
+      errors.boardRow = "Rows number should be bigger than 3.";
+    } else if (+data.boardRow > 10) {
+      errors.boardRow = "Rows number should be less than 10.";
     }
 
-    if (isEmpty(data)) {
+        if (isEmpty(data) || isEmpty(data.boardColumn)) {
+      errors.boardColumn = "Please enter the columns number!";
+    } else if (+data.boardColumn < 3) {
+      errors.boardColumn = "columns number should be bigger than 3.";
+    } else if (+data.boardColumn > 10) {
+      errors.boardColumn = "commons number should be less than 10.";
+    }
+
+    if (isEmpty(data) || isEmpty(data.winnerLength)) {
       errors.winnerLength = "Please enter Adjacent number.";
     } else if (+data.winnerLength < 3) {
       errors.winnerLength = "Adjacent cells number should be bigger that 2.";
-    } else if (+data.winnerLength > data.boardLength) {
+    } else if (+data.winnerLength > data.boardRow || +data.winnerLength > data.boardColumn) {
       errors.winnerLength =
-        "Adjacent cells could not be bigger than rows and columns number.";
+        "Adjacent cells could not be bigger than rows or columns number.";
     }
     return {
       errors,
@@ -50,12 +59,21 @@ const StartUp = () => {
   return (
     <Styles.Container onSubmit={handleSubmit}>
       <TextFieldGroup
-        placeholder="Rows * columns"
-        name="boardLength"
-        value={values.boardLength}
+        placeholder="Rows"
+        name="boardRow"
+        value={values.boardRow}
         onChange={handleChange}
-        error={errors.boardLength}
-        info="Number of Rows and Columns"
+        error={errors.boardRow}
+        info="Number of Rows"
+      />
+
+       <TextFieldGroup
+        placeholder="columns"
+        name="boardColumn"
+        value={values.boardColumn}
+        onChange={handleChange}
+        error={errors.boardColumn}
+        info="Number of Columns"
       />
 
       <TextFieldGroup

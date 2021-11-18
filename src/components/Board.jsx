@@ -9,10 +9,10 @@ const Board = observer(() => {
   const createBoard = () => {
     let board = [];
 
-    for (let i = 0; i < gameStore.boardLength; i++) {
+    for (let i = 0; i < gameStore.boardRow; i++) {
       let children = [];
-      for (let j = 0; j < gameStore.boardLength; j++) {
-        children.push(renderSquare(gameStore.boardLength * i + j));
+      for (let j = 0; j < gameStore.boardColumn; j++) {
+        children.push(renderSquare(gameStore.boardColumn * i + j));
       }
       board.push(
         <Styles.BoardRow key={`row-${i}`}>{children}</Styles.BoardRow>

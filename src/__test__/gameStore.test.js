@@ -8,7 +8,7 @@ beforeAll(() => {
 
 describe("<Store>", () => {
   it("have initial state", async () => {
-      expect(store.boardLength).toBe(undefined);
+      expect(store.boardRow).toBe(undefined);
       expect(store.winnerLength).toBe(undefined);
       expect(store.history.length).toBe(0);
       expect(store.stepNumber).toBe(0);

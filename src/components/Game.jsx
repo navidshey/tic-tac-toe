@@ -10,9 +10,9 @@ const Game = observer(() => {
   const gameStore = useGameStore();
   return (
     <>
-      {!gameStore.boardLength && <StartUp />}
-      {gameStore.boardLength && (
-        <Styles.Game columns={gameStore.boardLength}>
+      {(!gameStore.boardRow || !gameStore.boardColumn) && <StartUp />}
+      {gameStore.boardRow && gameStore.boardColumn && (
+        <Styles.Game columns={gameStore.boardColumn}>
           <Styles.StartNew show={gameStore.isFinished}>
             {gameStore.isFinished && (
               <>

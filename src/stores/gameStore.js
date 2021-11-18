@@ -1,6 +1,7 @@
 export function createGameStore() {
   return {
-    boardLength: undefined,
+    boardRow: undefined,
+    boardColumn: undefined,
     winnerLength: undefined,
     history: [],
     stepNumber: 0,
@@ -24,7 +25,7 @@ export function createGameStore() {
     get status() {
       if (this.hasWinner) {
         return "Winner: " + this.hasWinner.winner;
-      } else if (this.stepNumber === this.boardLength * this.boardLength) {
+      } else if (this.stepNumber === this.boardRow * this.boardColumn) {
         this.isFinished = true;
         return "No one win.";
       } else {
@@ -33,7 +34,8 @@ export function createGameStore() {
     },
 
     startNewGame() {
-      this.boardLength = undefined;
+      this.boardRow = undefined;
+      this.boardColumn = undefined;
       this.winnerLength = undefined;
       this.history = [];
       this.stepNumber = 0;
@@ -42,11 +44,12 @@ export function createGameStore() {
       this.isFinished = false;
     },
 
-    setStartUpData(boardLen, winnerLen) {
-      this.boardLength = boardLen;
+    setStartUpData(boardRow, boardColumn, winnerLen) {
+      this.boardRow = boardRow;
+      this.boardColumn = boardColumn;
       this.winnerLength = winnerLen;
       this.history.push({
-        squares: Array(boardLen * boardLen).fill(null),
+        squares: Array(boardRow * boardColumn).fill(null),
       });
     },
 
@@ -57,21 +60,23 @@ export function createGameStore() {
 
     calculateWinner(squares) {
       //win in row or column
-      for (let i = 0; i < this.boardLength; i++) {
-        for (let j = 0; j < this.boardLength - this.winnerLength + 1; j++) {
+      for (let i = 0; i < this.boardRow  ; i++) {
+        for (let j = 0; j < this.boardColumn ; j++) {
           let rowList = [];
           let rowIndex = [];
           let columnList = [];
           let columnIndex = [];
           for (let k = 0; k < this.winnerLength; k++) {
-            rowList.push(squares[i * this.boardLength + j + k]);
-            columnList.push(squares[(j + k) * this.boardLength + i]);
+            let rowCellIndex = i * this.boardColumn + j + k;
+            let columnCellIndex = (i + k) * this.boardColumn + j;
+            rowList.push(squares[rowCellIndex]);
+            columnList.push(squares[columnCellIndex]);
 
-            rowIndex.push(i * this.boardLength + j + k);
-            columnIndex.push((j + k) * this.boardLength + i);
+            rowIndex.push(rowCellIndex);
+            columnIndex.push(columnCellIndex);
           }
-          // console.log(`row=> i=${i}, j=${j}  ==== ${rowList.toString()}`);
-          // console.log(`column=> i=${i}, j=${j} ==== ${columnList.toString()}`);
+          console.log(`row=> i=${i}, j=${j}  ==== ${rowList.toString()}`);
+          console.log(`column=> i=${i}, j=${j} ==== ${columnList.toString()}`);
           if (this.checkIsWon(rowList))
             return {
               winner: rowList[0],
@@ -86,23 +91,25 @@ export function createGameStore() {
       }
 
       //win in cross
-      for (let i = 0; i <= this.boardLength - this.winnerLength; i++) {
-        for (let j = 0; j <= this.boardLength - this.winnerLength; j++) {
+      for (let i = 0; i <= this.boardRow - this.winnerLength; i++) {
+        for (let j = 0; j <= this.boardColumn - this.winnerLength; j++) {
           let slash = [];
           let backSlash = [];
           let slashIndex = [];
           let backSlashIndex = [];
           for (let k = 0; k < this.winnerLength; k++) {
-            slash.push(squares[(k + i) * this.boardLength + j + k]);
+            let slashRowIndex = (k + i) * this.boardColumn + j + k;
+            let backSlachRowIndex = (k + i) * this.boardColumn + j + (this.winnerLength - k - 1);
+            slash.push(squares[slashRowIndex]);
             backSlash.push(
               squares[
-                (k + i) * this.boardLength + j + (this.winnerLength - k - 1)
+                backSlachRowIndex
               ]
             );
 
-            slashIndex.push((k + i) * this.boardLength + j + k);
+            slashIndex.push(slashRowIndex);
             backSlashIndex.push(
-              (k + i) * this.boardLength + j + (this.winnerLength - k - 1)
+              backSlachRowIndex
             );
           }
 
