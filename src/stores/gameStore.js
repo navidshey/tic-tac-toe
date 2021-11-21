@@ -74,14 +74,16 @@ export function createGameStore() {
           for (let k = 0; k < this.winnerLength; k++) {
             let rowCellIndex = i * this.boardColumn + j + k;
             let columnCellIndex = (i + k) * this.boardColumn + j;
-            rowList.push(squares[rowCellIndex]);
-            columnList.push(squares[columnCellIndex]);
+           
+            if(rowCellIndex<this.boardColumn*this.boardRow){
+              rowList.push(squares[rowCellIndex]);
+            rowIndex.push(rowCellIndex);}
 
-            rowIndex.push(rowCellIndex);
-            columnIndex.push(columnCellIndex);
+            if(columnCellIndex<this.boardColumn*this.boardRow){
+              columnList.push(squares[columnCellIndex]);
+            columnIndex.push(columnCellIndex);}
+             
           }
-          // console.log(`row=> i=${i}, j=${j}  ==== ${rowList.toString()}`);
-          // console.log(`column=> i=${i}, j=${j} ==== ${columnList.toString()}`);
           if (this.checkIsWon(rowList))
             return {
               winner: rowList[0],
@@ -106,6 +108,7 @@ export function createGameStore() {
             let slashRowIndex = (k + i) * this.boardColumn + j + k;
             let backSlachRowIndex = (k + i) * this.boardColumn + j + (this.winnerLength - k - 1);
             slash.push(squares[slashRowIndex]);
+
             backSlash.push(
               squares[
                 backSlachRowIndex
@@ -128,8 +131,6 @@ export function createGameStore() {
               winner: backSlash[0],
               squares: backSlashIndex,
             };
-          // console.log(`slash=> i=${i}, j=${j}  ==== ${slash.toString()}`);
-          // console.log(`backSlash=> i=${i}, j=${j} ==== ${backSlash.toString()}`);
         }
       }
       return null;

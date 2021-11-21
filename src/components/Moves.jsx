@@ -12,7 +12,7 @@ const Moves = observer(() => {
     gameStore.clickedIndex.length > 0 &&
     gameStore.history.map((step, move) => {
       const desc = !isNaN(move) ? "Move #" + (+move+1) : undefined;
-      const index = gameStore.clickedIndex[move] + 1;
+      const index = gameStore.clickedIndex.length > move ?  gameStore.clickedIndex[move] + 1 : undefined;
       const row = Math.ceil(index / gameStore.boardColumn);
       const column = index - (row - 1) * gameStore.boardColumn;
 
@@ -28,19 +28,19 @@ const Moves = observer(() => {
                       <div>
                         {!isNaN(index) && `row: ${row}, columns: ${column}`}
                       </div>
-                    </Styles.Btn>{" "}
+                    </Styles.Btn>
                   </>
                 )}
               </Styles.TableCell>
               <Styles.TableCell>
                 {move % 2 == 0 && (
                   <>
-                    <Styles.Btn onClick={() => gameStore.jumpTo(move+1)}>
+                    <Styles.Btn   onClick={() => gameStore.jumpTo(move+1)}>
                       {desc}
                       <div>
                         {!isNaN(index) && `row: ${row}, columns: ${column}`}
                       </div>
-                    </Styles.Btn>{" "}
+                    </Styles.Btn>
                   </>
                 )}
               </Styles.TableCell>
