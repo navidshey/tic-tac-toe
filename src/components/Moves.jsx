@@ -2,6 +2,8 @@ import React from "react";
 import { useGameStore } from "../contexts/GameContext";
 import { observer } from "mobx-react-lite";
 import * as Styles from "./../styles/game";
+import { uid } from "../utils/uid";
+
 
 const Moves = observer(() => {
   const gameStore = useGameStore();
@@ -17,7 +19,7 @@ const Moves = observer(() => {
       return (
         <>
           {desc && !isNaN(row) && (
-            <tr key={`${move}-${step}`}>
+            <tr key={uid()}>
               <Styles.TableCell>
                 {move % 2 == 1 && (
                   <>

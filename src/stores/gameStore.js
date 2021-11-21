@@ -15,7 +15,7 @@ export function createGameStore() {
         : undefined;
     },
     get current() {
-      return this.history.length > 0 && this.history[this.stepNumber];
+      return this.history.length > 0 ? this.history[this.stepNumber] : undefined;
     },
 
     get hasWinner() {
@@ -59,6 +59,11 @@ export function createGameStore() {
     },
 
     calculateWinner(squares) {
+
+      if(squares.filter(item => item).length<this.winnerLength){
+        return null;
+      }
+
       //win in row or column
       for (let i = 0; i < this.boardRow  ; i++) {
         for (let j = 0; j < this.boardColumn ; j++) {
@@ -75,8 +80,8 @@ export function createGameStore() {
             rowIndex.push(rowCellIndex);
             columnIndex.push(columnCellIndex);
           }
-          console.log(`row=> i=${i}, j=${j}  ==== ${rowList.toString()}`);
-          console.log(`column=> i=${i}, j=${j} ==== ${columnList.toString()}`);
+          // console.log(`row=> i=${i}, j=${j}  ==== ${rowList.toString()}`);
+          // console.log(`column=> i=${i}, j=${j} ==== ${columnList.toString()}`);
           if (this.checkIsWon(rowList))
             return {
               winner: rowList[0],

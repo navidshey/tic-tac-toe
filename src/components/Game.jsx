@@ -5,6 +5,7 @@ import Moves from "./Moves";
 import StartUp from "./StartUp";
 import { observer } from "mobx-react-lite";
 import * as Styles from "./../styles/game";
+import { uid } from "../utils/uid";
 
 const Game = observer(() => {
   const gameStore = useGameStore();
@@ -34,7 +35,7 @@ const Game = observer(() => {
             </Styles.Header>
             <table>
               <tbody>
-                <tr key="table-header-row">
+                <tr key={uid()}>
                   <Styles.TableHeader>player 1(X)</Styles.TableHeader>
                   <Styles.TableHeader>player 2(O)</Styles.TableHeader>
                 </tr>
