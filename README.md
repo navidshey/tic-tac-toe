@@ -1,4 +1,4 @@
-# Tic-Tac-Toe
+# Tic-Tac-Toe, using React and Mobx
 
 This sample is developed by React and MobX. There are two player who can play together in the same browser. user can select from 3 to 10 rows for the board and number of adjacent cells to determined winner. [Emotion](https://emotion.sh/docs/introduction) is used as css-in-js. 
 
